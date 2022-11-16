@@ -294,7 +294,22 @@ return new A(B,"base64").toString("binary")}:"object"==typeof t.base64js?functio
       scaffolding.setUsername("player####".replace(/#/g, () => Math.floor(Math.random() * 10)));
       scaffolding.setAccentColor("#ff4c4c");
 
-      scaffolding.addCloudProvider(new Scaffolding.Cloud.LocalStorageProvider("cloudvariables:p4-@Tic Tac Toe.sb3"));
+      {const providers = {};
+providers.local = new Scaffolding.Cloud.LocalStorageProvider("cloudvariables:p4-@Tic Tac Toe.sb3");
+providers.ws = new Scaffolding.Cloud.WebSocketProvider(["wss://clouddata.turbowarp.org","wss://clouddata.turbowarp.xyz"], "p4-@Tic Tac Toe.sb3");
+for (const provider of Object.values(providers)) scaffolding.addCloudProvider(provider);
+scaffolding.addCloudProviderOverride("☁ x color", providers["local"] || null);
+scaffolding.addCloudProviderOverride("☁ wallpaper", providers["local"] || null);
+scaffolding.addCloudProviderOverride("☁ views", providers["local"] || null);
+scaffolding.addCloudProviderOverride("☁ x win", providers["local"] || null);
+scaffolding.addCloudProviderOverride("☁ o win", providers["local"] || null);
+scaffolding.addCloudProviderOverride("☁ tie", providers["local"] || null);
+scaffolding.addCloudProviderOverride("☁ o color", providers["local"] || null);
+scaffolding.addCloudProviderOverride("☁ game mod", providers["local"] || null);
+scaffolding.addCloudProviderOverride("☁ save whoos", providers["local"] || null);
+scaffolding.addCloudProviderOverride("☁ usernames", providers["ws"] || null);
+scaffolding.addCloudProviderOverride("☁ comp mode", providers["local"] || null);
+};
 
       vm.setTurboMode(false);
       if (vm.setInterpolation) vm.setInterpolation(true);
